@@ -1,0 +1,108 @@
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,select,p,blockquote,th,td
+    {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box; /* Firefox */
+    -webkit-box-sizing: border-box; /* Safari */
+    
+    -moz-transition-duration:0s;
+    -webkit-transition-duration:0s;
+    transition-duration:0s;
+}
+
+html {
+    color: #000;
+    background: #FFF;
+    -webkit-text-size-adjust: none; /* chrome fixes font-size < 12px */
+}
+
+fieldset,img {
+    border: 0;
+}
+
+abbr,acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+address,caption,cite,code,dfn,em,strong,th,var,optgroup {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+code,kbd,samp,tt {
+    font-size: 100%;
+}
+
+abbr,acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+input,button,textarea,select,optgroup,option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input,button,textarea,select {
+    *font-size: 100%;
+}
+
+body {
+    line-height: 1.5;
+}
+
+ol,ul {
+    list-style: none;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+caption,th {
+    text-align: left;
+}
+
+/* 重置上下标 */
+sup,sub {
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+/* remember to highlight inserts somehow! */
+del {
+    text-decoration: line-through;
+}
+
+/* 去掉段落引号 */
+blockquote,q {
+    quotes: none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+    content: '';
+    content: none;
+}
+
+/* 去掉链接下划线 */
+:link,*:visited,ins {
+    text-decoration: none;
+}
+
+/* remember to define focus styles! */
+:focus{
+    outline: 0 none;
+}

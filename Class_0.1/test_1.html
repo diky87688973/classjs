@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- 字符集设置, 避免乱码 -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta http-equiv="content-language" content="zh-cn" />
+
+<meta name="author" content="Fan, diky87@qq.com" />
+<meta name="keywords" content="Class,Classjs,Class.js,Fan,Fanjs,Fan.js,javascript,javascript oop,oop,oopjs,oop.js" />
+<meta name="description" content="javascript oop framework,面向对象的javascript框架" />
+
+<!-- 自适应界面, 使用设备最大尺寸, 默认原始比例显示
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+  -->
+<!--  -->
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+
+<title>Class.js OOP</title>
+
+<!-- css -->
+<link type="text/css" rel="stylesheet" href="res/css/reset.css" />
+<link type="text/css" rel="stylesheet" href="res/css/layout.css" />
+<link type="text/css" rel="stylesheet" href="res/css/code.css" />
+
+<!-- Class.js OOP
+<script src="Class.js"                       // 主文件
+        compiler="Class.ECMAScript6Compiler" // 配置编译器类名,提供ECMAScript6类语法支持,无需新类语法时,可以不配置
+        home=""                              // 配置Class.js的home目录位置,缺省为Class.js所在的目录
+        classpath=""                         // 配置类检索目录
+        mode="develop"                       // 配置运行模式:开发模式(develop)|工作模式(operate)
+        charset="utf-8"
+        type="text/javascript">
+</script>
+-->
+<script src="Class.js"
+        compiler="Class.ECMAScript6Compiler"
+        home=""
+        classpath="Fan=src;example/test;"
+        mode="develop"
+        charset="utf-8"
+        type="text/javascript">
+</script>
+
+<!-- Fan.js 
+<script src="Fan.js"
+        root=""
+        classpath=""
+        charset="utf-8"
+        type="text/javascript">
+</script>
+-->
+ 
+<!-- Fan.js 编译器
+<script type="text/javascript" src="ECMScript-6-Compiler-Fanjs.js"></script>
+ -->
+ 
+<script type="text/javascript">
+    function _onload() {
+        // 记录源码, 用于显示
+        var srcCode = [];
+     
+        // 监听类文件加载完毕事件
+        Class.on( 'ClassFileLoaded', function( className, code ) {
+            if ( !/(?:Dog|Animal|IMyItface)/.test( className ) )
+                return;
+            
+            srcCode.push( code );
+            if ( srcCode.length == 3 )
+                showSrcCode();
+        } );
+
+        Import( 'Dog' );
+        var dog = new Dog( 3, '公', '小白' );
+        console.log( dog.say( 'hello' ) );
+        
+        function showSrcCode() {
+            var code = srcCode.join( '\n\n// ---- 闪瞎双眼的分割线 ---\n\n' );
+            
+            var codeText = Class.getCompiler().coloring( code );
+            document.getElementById( 'srcCodeWrap' ).innerHTML = codeText;
+            
+            Class.getCompiler().build( code, function( newCode ) {
+                
+                // 末尾追加测试代码
+                var testCode = [ "// main.js",
+                                 "Import( 'Dog' );",
+                                 "var dog = new Dog( 3, '公', '小白' );",
+                                 "console.log( dog.say( 'hello' ) );  // 小白,3,公,say:hello\n\n" ].join( '\n' );
+                
+                newCode += '\n\n// ---- 闪瞎双眼的分割线 ---\n\n' + testCode;
+                
+                document.getElementById( 'newCodeWrap' ).innerHTML = Class.getCompiler().coloring( newCode );
+            } );
+            
+            
+        }
+        
+        /*
+        // 性能测试
+        startTime = new Date().getTime();
+        for ( var i = 0; i < 10000; i++ )
+            new Class.ECMAScript6Compiler(); // 1075
+            //new Class.Object(); // 185
+            //new Object(); // 1
+        console.log( '\n\n\n性能测试:Class.js, new 10000个ECMAScript6Compiler对象, 耗时:' + (new Date().getTime() - startTime) + '毫秒' );
+        //*/
+    }
+</script>
+
+</head>
+
+<body onload="_onload()" style="font-size:12px;height:100%;">
+    <h4 style="text-align:center;">跨浏览器支持 ECMAScript6 类机制</h4>
+    <h6 style="text-align:center;color:#999;">Class.js v0.1 作者:Fan QQ:87688973</h6>
+    <div style="width:48%;float:left;">
+        <h6 style="text-align:center;color:blue;">编译前的 ECMAScript6 代码</h6>
+        <pre id="srcCodeWrap" class="code-bg-color" style="padding:4px;"></pre>
+    </div>
+    <div style="width:48%;float:right;">
+        <h6 style="text-align:center;color:blue;">编译后的 Class.js 代码</h6>
+        <pre id="newCodeWrap" class="code-bg-color" style="padding:4px;"></pre>
+    </div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>导航悬浮展示菜单</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+html,body,ul {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background-color:#eee;
+}
+.nav {
+	width:100%;
+	background-color:rgb(28,32,35);
+}
+.nav ul li {
+	height:40px;
+	line-height:40px;
+	padding:0 10px;
+	list-style: outside none none;
+    float: left;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bolder;
+    font-family: 'microsoft yahei';
+}
+/* 清除浮动,自动撑开 */
+.clearfix {
+    *zoom: 1;
+}
+.clearfix:before,.clearfix:after {
+    display: table;
+    content: '';
+    line-height: 0;
+}
+.clearfix:after {
+    clear: both;
+}
+.menu {
+	background-color:rgb(39,43,46);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	color: white;
+    font-size: 14px;
+    font-family: 'microsoft yahei';
+}
+.nav-desc {
+	color: slategrey;
+    padding: 10px;
+}
+</style>
+
+<script type="text/javascript" src="anim-src.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+	var hideMenuTimer;
+	
+	// 鼠标悬浮的时候, 显示菜单, 并且停止隐藏菜单的定时器(如果计时器存在的话)
+	function showMenu( menuId, closeGapAnim, navIdx ) {
+	    clearTimeout( hideMenuTimer );
+	    
+	    if ( menuId == null )
+	        return;
+	    
+	    var navWrap = document.getElementById( 'j-nav' + navIdx );
+	    var menuWrap = document.getElementById( 'j-menu' + navIdx );
+	    menuWrap.innerHTML = createMenuUI( menuId );
+	    menuWrap.style.display = 'block';
+	    
+	    var top = navWrap.offsetTop + navWrap.offsetHeight + 10;
+	    menuWrap.style.top = menuWrap.style.top || (top + 'px');
+	    
+	 	// 变换
+	 	if ( menuWrap.style.opacity < 1 ) {
+	 		anim( menuWrap.style.opacity, 1, 300, function( now, progress, fps ) {
+			    menuWrap.style.opacity = now;
+			}, function() {
+			    menuWrap.style.opacity = 1;
+			} );
+	 		anim( parseFloat( menuWrap.style.top ), top - 10, 300, function( now, progress, fps ) {
+			    menuWrap.style.top = now + 'px';
+			}, function() {
+			    menuWrap.style.top = (top - 10) + 'px';
+			} );
+	 	} else if ( !closeGapAnim ) {
+	 	    anim( menuWrap.style.opacity, 0.5, 200, function( now, progress, fps ) {
+			    menuWrap.style.opacity = now;
+			}, function() {
+			    anim( menuWrap.style.opacity, 1, 200, function( now, progress, fps ) {
+				    menuWrap.style.opacity = now;
+				}, function() {
+				    menuWrap.style.opacity = 1;
+				} );
+			} );
+	 	   	anim( parseFloat( menuWrap.style.top ), top, 200, function( now, progress, fps ) {
+			    menuWrap.style.top = now + 'px';
+			}, function() {
+			    anim( parseFloat( menuWrap.style.top ), top - 10, 200, function( now, progress, fps ) {
+				    menuWrap.style.top = now + 'px';
+				}, function() {
+				    menuWrap.style.top = (top - 10) + 'px';
+				} );
+			} );
+	 	}
+	}
+	
+	// 鼠标移开菜单, 或者移开导航, 建立一个300毫秒后关闭菜单的定时器
+	function hideMenu( navIdx ) {
+	    clearTimeout( hideMenuTimer );
+	    hideMenuTimer = setTimeout( function() {
+	        clearTimeout( hideMenuTimer );
+	        
+	        var navWrap = document.getElementById( 'j-nav' + navIdx );
+	        var menuWrap = document.getElementById( 'j-menu' + navIdx );
+	        var top = navWrap.offsetTop + navWrap.offsetHeight;
+	        menuWrap.style.top = menuWrap.style.top || (top + 'px');
+	     	
+	        // 变换
+	        if ( menuWrap.style.opacity > 0 ) {
+	            anim( 1, 0, 200, function( now, progress, fps ) {
+				    menuWrap.style.opacity = now;
+				}, function() {
+				    menuWrap.style.opacity = 0;
+				    menuWrap.style.display = 'none';
+				} );
+				anim( parseFloat( menuWrap.style.top ), top + 10, 200, function( now, progress, fps ) {
+				    menuWrap.style.top = now + 'px';
+				} );
+	        }
+	    }, 200 );
+	}
+	
+	// 创建假UI
+	function createMenuUI( menuId ) {
+	    var html = [ '<pre>' ];
+	    var str = '菜单' + menuId + '测试';
+	    for ( var i = 0, len = (Math.random() * 10 >> 0) + 5; i < len; i++ ) {
+	        html.push( str + str + str + str + str + str );
+	    }
+	    html.push( '</pre>' );
+	    return html.join( '\n' );
+	}
+	
+	function init() {
+	    var menuWrap = document.getElementById( 'j-menu' );
+	    menuWrap.style.opacity = 0;
+	    menuWrap.style.display = 'none';
+	}
+</script>
+</head>
+
+<body onload="init()">
+	<div>
+		<span class="nav-desc">平滑过度:</span>
+		<div class="nav" id="j-nav1">
+			<ul class="clearfix">
+				<li onmouseover="showMenu(1,false,'1')" onmouseout="hideMenu('1')">导航1</li>
+				<li onmouseover="showMenu(2,false,'1')" onmouseout="hideMenu('1')">导航2</li>
+				<li onmouseover="showMenu(3,false,'1')" onmouseout="hideMenu('1')">导航3</li>
+				<li onmouseover="showMenu(4,false,'1')" onmouseout="hideMenu('1')">导航4</li>
+				<li onmouseover="showMenu(5,false,'1')" onmouseout="hideMenu('1')">导航5</li>
+			</ul>
+		</div>
+	
+		<div class="menu" id="j-menu1" onmouseover="showMenu()" onmouseout="hideMenu('1')"></div>
+	</div>
+	
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	
+	<div>
+		<span class="nav-desc">无过度:</span>
+		<div class="nav" id="j-nav2">
+			<ul class="clearfix">
+				<li onmouseover="showMenu(1,true,'2')" onmouseout="hideMenu('2')">导航1</li>
+				<li onmouseover="showMenu(2,true,'2')" onmouseout="hideMenu('2')">导航2</li>
+				<li onmouseover="showMenu(3,true,'2')" onmouseout="hideMenu('2')">导航3</li>
+				<li onmouseover="showMenu(4,true,'2')" onmouseout="hideMenu('2')">导航4</li>
+				<li onmouseover="showMenu(5,true,'2')" onmouseout="hideMenu('2')">导航5</li>
+			</ul>
+		</div>
+	
+		<div class="menu" id="j-menu2" onmouseover="showMenu()" onmouseout="hideMenu('2')"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,355 @@
+/**
+ * Fan.ui包中所需css 
+ * 移动设备上的app所需css
+ */
+
+/* 加载ui的标签 */
+load-ui {
+	display:none;
+}
+
+/* 启用硬件加速 */
+.enable-hardware-acceleration {
+	-webkit-transform: translate3d(0,0,0); /* 提前给需要开启硬件加速的元素给上此样式,避免临时开启界面闪一下 */
+	
+	backface-visibility:hidden;         /* 属性定义当元素不面向屏幕时是否可见 */
+	-webkit-backface-visibility:hidden;	/* Chrome 和 Safari */
+	-moz-backface-visibility:hidden; 	/* Firefox */
+	-ms-backface-visibility:hidden; 	/* Internet Explorer */
+}
+
+/* 相对定位 */
+.layout-relative {
+	position: relative !important;
+}
+
+/* 绝对定位 */
+.layout-absolute {
+    position: absolute !important;
+}
+
+/* 绝对定位 */
+.layout-static {
+    position: static !important;
+}
+
+/* 固定定位 */
+.layout-fixed {
+    position: fixed !important;
+}
+
+/* 继承父容器定位方式 */
+.layout-inherit {
+    position: inherit !important;
+}
+
+/******** 控制器样式部分 ********/
+.layout-controller-inner-dom {}
+
+
+/******** view样式部分 *********/
+/* 保留样式名, view的dom和innerDom相关样式, 暂未使用 */
+.layout-view-dom {}
+.layout-view-inner-dom {}
+
+/* 头部 */
+.layout-header {
+	-webkit-transform: translateZ(0); /* fixed webkit css bug */
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 40px;
+    z-index: 1;
+}
+/* 头部返回按钮  */
+.layout-h-back-btn {
+    position: absolute;
+    top: auto;
+    left: 2px;
+    right: auto;
+    bottom: 2px;
+    height: 26px;
+    line-height: 26px;
+    width: 40px;
+    z-index: 1;
+}
+/* 头部标题文本框 */
+.layout-h-title-text {
+    position: absolute;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30px;
+    line-height: 30px;
+    z-index: 0;
+    text-align: center;
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+}
+/* 头部通用右侧按钮  */
+.layout-h-right-btn {
+    position: absolute;
+    top: auto;
+    right: 2px;
+    left: auto;
+    bottom: 2px;
+    height: 26px;
+    line-height: 26px;
+    width: auto;
+    z-index: 1;
+    color: #fff;
+    font-size: 13px;
+    background-color: #D9641B;
+    border: solid 1px #C36523;
+    padding: 0 7px;
+}
+
+/* 主体 */
+.layout-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    width: auto;
+    z-index: 1;
+}
+/* 主体, ht:预留头部和尾部位置 */
+.layout-body-ht {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    height: auto;
+    width: auto;
+    z-index: 1;
+}
+/* 主体: h:仅预留头部位置 */
+.layout-body-h {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    width: auto;
+    z-index: 1;
+}
+/* 主体: t:仅预留尾部位置 */
+.layout-body-t {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    height: auto;
+    width: auto;
+    z-index: 1;
+}
+
+/* 左侧主体 */
+.layout-left-body {
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    height: auto;
+    width: 80%;
+    z-index: 1;
+}
+/* 中间主体 */
+.layout-center-body {
+    position: absolute;
+    top: 0;
+    left: 80%;
+    right: auto;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    z-index: 2;
+}
+/* 右侧主体 */
+.layout-right-body {
+    position: absolute;
+    top: 0;
+    left: 180%;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    width: 80%;
+    z-index: 1;
+}
+
+/* 尾部 */
+.layout-footer {
+	-webkit-transform: translateZ(0); /* fixed webkit css bug */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: 40px;
+    z-index: 1;
+}
+
+/* TabView item wrap */
+.layout-tab-item-wrap {
+	border: 0px red solid;
+	overflow: hidden;
+	word-wrap: break-word;
+	width: 100%;
+}
+
+/* 按钮 */
+.layout-button {
+	position: absolute;
+	top: 0;
+    left: 0;
+    width: auto;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 2px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* Item图标 */
+.layout-item {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50px;
+    height: 50px;
+    overflow: hidden;
+
+    background-color: green;
+}
+/* Item图标内的容器 */
+.layout-item-inner {
+	position:absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	
+	-moz-transform-origin: 0px 0px 0px;
+	-webkit-transform-origin: 0px 0px 0px;
+	transform-origin: 0px 0px 0px;
+	
+	-moz-transform: scale(1, 1);
+	-webkit-transform: scale(1, 1);
+	transform: scale(1, 1);
+
+	background-color:blue;
+}
+
+/* 常用宽高 */
+.layout-wh-100 {
+    width: 100%;
+    height: 100%;
+}
+.layout-w-100 {
+    width: 100%;
+}
+.layout-h-100 {
+    height: 100%;
+}
+.layout-wh-auto {
+    width: auto;
+    height: auto;
+}
+.layout-w-auto {
+    width: auto;
+}
+.layout-h-auto {
+    height: auto;
+}
+
+/* 常用滚动面板 */
+/* 提供仅有纵向滚动 */
+.layout-scroll-h {
+	width: 100%;
+	height: 100%;
+}
+/* 提供仅有横向滚动 */
+.layout-scroll-w {
+	height: 100%;
+    width: auto;
+}
+/* 提供纵横都可滚动 */
+.layout-scroll-wh {
+    height: auto;
+    width: auto;
+}
+
+/* 遮盖层 */
+.layout-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    width: auto;
+    z-index: 9999999999;
+    background-color: transparent;
+}
+
+/* 常用分割线 */
+/* 横向 */
+.layout-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+    background-color: #000;
+}
+/* 纵向 */
+.layout-line-v {
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: 0;
+    width: 1px;;
+    height: auto;
+    background-color: #000;
+}
+
+/* 常用指针 */
+.layout-c-pointer {
+    cursor: pointer;
+}
+
+/* 常用背景色 */
+.layout-bgcolor-transparent {
+	background-color: transparent;
+}
+
+/* 窗口阴影 */
+.layout-box-shadow {
+    -webkit-box-shadow:3px 3px 10px rgba(2, 37, 69, 0.8);
+    -moz-box-shadow:3px 3px 10px rgba(2, 37, 69, 0.8);
+    box-shadow:3px 3px 10px rgba(2, 37, 69, 0.8);
+}
+/* 悬浮阴影效果 */
+.layout-box-shadow-float {
+    -webkit-box-shadow:3px 3px 100px rgba(2, 37, 69, 0.8);
+    -moz-box-shadow:3px 3px 100px rgba(2, 37, 69, 0.8);
+    box-shadow:3px 3px 100px rgba(2, 37, 69, 0.8);
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Class.js OOP</title>
+<meta content="Class,Classjs,Class.js,Fan,Fanjs,Fan.js,javascript,javascript oop,oop,oopjs,oop.js" name="keywords"/>
+<meta content="javascript oop framework,面向对象的javascript框架" name="description"/>
+
+<!-- 自适应界面, 使用设备最大尺寸, 默认原始比例显示 -->
+<meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" name="viewport"/>
+
+<!-- 字符集设置, 避免乱码 -->
+<meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+
+<!-- 资源链接 -->
+<base href="http://demo.fanjs.net/"/>
+
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="res/css/reset.css"/>
+<link rel="stylesheet" type="text/css" href="res/css/layout.css"/>
+
+<!-- require 
+<script type="text/javascript" src="lib/require/require.js"></script>
+-->
+
+<!-- jquery 
+<script type="text/javascript" src="lib/jquery/jquery-1.11.2.min.js"></script>
+-->
+
+<!-- 语法高亮插件 begin -->
+<link rel="stylesheet" type="text/css" href="lib/syntaxhighlighter_3.0.83/styles/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="lib/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+<link rel="stylesheet" type="text/css" href="lib/syntaxhighlighter_3.0.83/styles/shThemeRDark.css"/>
+<!-- 自定义样式 -->
+<link rel="stylesheet" type="text/css" href="res/css/code.css"/>
+
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushJScriptForClass.js"></script>
+
+<!-- 其他用不上的语言屏蔽 
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shAutoloader.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushVb.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushSql.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushDelphi.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushRuby.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="lib/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js"></script>
+-->
+
+<script type="text/javascript">
+	window.onload = function() {
+	  	// SyntaxHighlighter.config.tagName = 'div';默认pre标签
+	    SyntaxHighlighter.config.stripBrs = true;
+		SyntaxHighlighter.defaults[ 'toolbar' ] = false;
+		SyntaxHighlighter.highlight();
+	};
+</script>
+<!-- 语法高亮插件 end -->
+
+</head>
+
+<body style="font-size:12px;height:100%;padding:0 7%;">
+    <h4 style="text-align:center;">Javascript版OOP框架, 跨浏览器支持 ECMAScript6 类机制</h4>
+	<h6 style="text-align:center;color:#999;margin-bottom: 10px;">Class.js v0.1 作者:Fan QQ:87688973</h6>
+	
+	<!-- 下载链接 & 技术交流群 -->
+    <div style="text-align: center; height: 40px;">
+        <a style="margin-right:10px;" href="http://download.fanjs.net/Class_0.1.rar">Download Class.js v0.1</a>
+        <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=7fbc58c7e40a0b512fc0f2af0c9ee119b681acc15d014cd5f057d19ba2ef6262"><img title="Javascript技术联盟" alt="Javascript技术联盟" src="http://pub.idqqimg.com/wpa/images/group.png" style="margin-bottom:-6px;border:0;margin-left:10px;"></a>
+    </div>
+	
+    <div style="float:left;width:48%;">
+        <span class="code-title">编译前的 ECMAScript6 代码</span>
+        <pre id="srcCodeWrap" class="brush:java;class-name:;highlight:[0];">
+// Dog.js
+import Animal;    // 引入依赖
+import IMyItface;
+
+class Dog extends Animal implements IMyItface {
+    
+    var a = 'aaa';          // 私有成员
+    this.name = 'dog';      // 公有成员, 实例通过 this.name 访问
+    
+    Dog( age, sex, name ) {
+        super( age, sex );
+        
+        this.name = name;
+    }
+    
+    say( msg ) {
+        return this.name + ',' + super( msg );   // super(...) 调用父类同名方法
+    }
+    
+    method1() {
+        return 'method1 call ' + IMyItface.PROPERTY1;
+    }
+      
+    method2() {
+        return 'method2 call ' + IMyItface.PROPERTY2;
+    }
+      
+}
+
+// ---- 闪瞎双眼的分割线 ---
+
+// Animal.js
+class Animal {
+
+    this.age = 0;
+    this.sex = '未知';
+    
+    Animal( age, sex ) {
+        super();        // 调用父类构造方法
+
+        this.age = age;
+        this.sex = sex;
+    }
+
+    say( msg ) {
+        return this.age + ',' + this.sex + ',say:' + msg;
+    }
+}
+
+// ---- 闪瞎双眼的分割线 ---
+
+// IMyItface.js
+interface IMyItface {
+    method1();      // 接口方法定义
+    method2();
+    this.PROPERTY1 = '接口中的静态常量';
+    this.PROPERTY2 = true;
+}
+
+
+
+        </pre>
+    </div>
+    <div style="float:right;width:48%;">
+        <span class="code-title">编译后的 Class.js 代码</span>
+        <pre id="newCodeWrap" class="brush:jsforclass;class-name:;highlight:[0];">
+// Dog.js
+Import( "Animal" );    // 引入依赖
+Import( "IMyItface" );
+
+Class( "Dog", Animal, IMyItface, function(){
+    
+    var a = 'aaa';          // 私有成员
+    this.name = 'dog';      // 公有成员, 实例通过 this.name 访问
+    
+    this.Dog=function( age, sex, name ) {
+        Super( age, sex );
+        
+        this.name = name;
+    }
+    
+    this.say=function( msg ) {
+        return this.name + ',' + Super( msg );   // super(...) 调用父类同名方法
+    }
+    
+    this.method1=function() {
+        return 'method1 call ' + IMyItface.PROPERTY1;
+    }
+      
+    this.method2=function() {
+        return 'method2 call ' + IMyItface.PROPERTY2;
+    }
+      
+});
+
+// ---- 闪瞎双眼的分割线 ---
+
+// Animal.js
+Class( "Animal", function(){
+
+    this.age = 0;
+    this.sex = '未知';
+    
+    this.Animal=function( age, sex ) {
+        Super();        // 调用父类构造方法
+
+        this.age = age;
+        this.sex = sex;
+    }
+
+    this.say=function( msg ) {
+        return this.age + ',' + this.sex + ',say:' + msg;
+    }
+});
+
+// ---- 闪瞎双眼的分割线 ---
+
+// IMyItface.js
+Interface( "IMyItface", function(){
+    this.method1=Function;      // 接口方法定义
+    this.method2=Function;
+    this.PROPERTY1 = '接口中的静态常量';
+    this.PROPERTY2 = true;
+});
+
+// ---- 闪瞎双眼的分割线 ---
+
+// test
+Import( 'Dog' );
+var dog = new Dog( 3, '公', '小白' );
+console.log( dog.say( 'hello' ) );  // 小白,3,公,say:hello
+
+        </pre>
+    </div>
+
+
+</body>
+</html>

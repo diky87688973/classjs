@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Class.js OOP</title>
+<meta content="Class,Classjs,Class.js,Fan,Fanjs,Fan.js,javascript,javascript oop,oop,oopjs,oop.js" name="keywords"/>
+<meta content="javascript oop framework,面向对象的javascript框架" name="description"/>
+
+<!-- 自适应界面, 使用设备最大尺寸, 默认原始比例显示 -->
+<meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" name="viewport"/>
+
+<!-- 字符集设置, 避免乱码 -->
+<meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+
+<!-- css -->
+<link href="res/css/reset.css" rel="stylesheet" type="text/css">
+<link href="res/css/layout.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="res/css/code.css" />
+
+<!-- Class.js OOP
+<script src="Class.js"                       // 主文件
+        compiler="Class.ECMAScript6Compiler" // 配置编译器,提供ECMAScript6类语法支持,无需新类语法时,可以不配置
+        home=""                              // 配置Class.js的home目录位置,缺省为Class.js所在的目录
+        classpath=""                         // 配置类检索目录
+        mode="develop"                       // 配置运行模式:开发模式(develop)|工作模式(operate)
+        charset="utf-8"
+        type="text/javascript">
+</script>
+-->
+
+</head>
+
+<body style="font-size:12px;height:100%;">
+    <h4 style="text-align:center;">跨浏览器支持 ECMAScript6 类机制</h4>
+	<h6 style="text-align:center;color:#999;">Class.js v0.1 作者:Fan QQ:87688973</h6>
+    <div style="width:48%;float:left;">
+        <h6 style="text-align:center;color:blue;">编译前的 ECMAScript6 代码</h6>
+        <pre style="padding:4px;" class="code-bg-color" id="srcCodeWrap"><span class="code-comments">// Dog.js
+</span><span class="code-keyword">import</span> Animal;
+<span class="code-keyword">import</span> IMyItface;
+
+<span class="code-keyword">class</span> Dog <span class="code-keyword">extends</span> Animal <span class="code-keyword">implements</span> IMyItface {
+    
+    <span class="code-keyword">var</span> a = <span class="code-exp-string">'aaa'</span>;          <span class="code-comments">// 私有成员
+</span>    <span class="code-keyword">this</span>.name = <span class="code-exp-string">'dog'</span>;      <span class="code-comments">// 公有成员, 实例通过 <span class="code-keyword">this</span>.name 访问
+</span>    
+    Dog( age, sex, name ) {
+        <span class="code-keyword">super</span>( age, sex );
+        
+        <span class="code-keyword">this</span>.name = name;
+    }
+    
+    say( msg ) {
+        <span class="code-keyword">return</span> <span class="code-keyword">this</span>.name + <span class="code-exp-string">','</span> + <span class="code-keyword">super</span>( msg );   <span class="code-comments">// <span class="code-keyword">super</span>(...) 调用父类同名方法
+</span>    }
+    
+    method1() {
+        <span class="code-keyword">return</span> <span class="code-exp-string">'method1 call '</span> + IMyItface.PROPERTY1;
+    }
+      
+    method2() {
+        <span class="code-keyword">return</span> <span class="code-exp-string">'method2 call '</span> + IMyItface.PROPERTY2;
+    }
+      
+}
+
+<span class="code-comments">// ---- 闪瞎双眼的分割线 ---
+</span>
+<span class="code-comments">// Animal.js
+</span><span class="code-keyword">class</span> Animal {
+
+    <span class="code-keyword">this</span>.age = 0;
+    <span class="code-keyword">this</span>.sex = <span class="code-exp-string">'未知'</span>;
+    
+    Animal( age, sex ) {
+        <span class="code-keyword">super</span>();        <span class="code-comments">// 调用父类构造方法
+</span>
+        <span class="code-keyword">this</span>.age = age;
+        <span class="code-keyword">this</span>.sex = sex;
+    }
+
+    say( msg ) {
+        <span class="code-keyword">return</span> <span class="code-keyword">this</span>.age + <span class="code-exp-string">','</span> + <span class="code-keyword">this</span>.sex + <span class="code-exp-string">',say:'</span> + msg;
+    }
+}
+
+<span class="code-comments">// ---- 闪瞎双眼的分割线 ---
+</span>
+<span class="code-comments">// IMyItface.js
+</span><span class="code-keyword">interface</span> IMyItface {
+    method1();      <span class="code-comments">// 接口方法定义
+</span>    method2();
+    <span class="code-keyword">this</span>.PROPERTY1 = <span class="code-exp-string">'接口中的静态常量'</span>;
+    <span class="code-keyword">this</span>.PROPERTY2 = <span class="code-keyword">true</span>;
+}</pre>
+    </div>
+    <div style="width:48%;float:right;">
+        <h6 style="text-align:center;color:blue;">编译后的 Class.js 代码</h6>
+        <pre style="padding:4px;" class="code-bg-color" id="newCodeWrap"><span class="code-comments">// Dog.js
+</span>Import( <span class="code-exp-string">"Animal"</span> );
+Import( <span class="code-exp-string">"IMyItface"</span> );
+
+Class( <span class="code-exp-string">"Dog"</span> , Animal , IMyItface ,<span class="code-keyword">function</span>(){
+    
+    <span class="code-keyword">var</span> a = <span class="code-exp-string">'aaa'</span>;          <span class="code-comments">// 私有成员
+</span>    <span class="code-keyword">this</span>.name = <span class="code-exp-string">'dog'</span>;      <span class="code-comments">// 公有成员, 实例通过 <span class="code-keyword">this</span>.name 访问
+</span>    
+    <span class="code-keyword">this</span>.Dog=<span class="code-keyword">function</span>( age, sex, name ) {
+        Super( age, sex );
+        
+        <span class="code-keyword">this</span>.name = name;
+    }
+    
+    <span class="code-keyword">this</span>.say=<span class="code-keyword">function</span>( msg ) {
+        <span class="code-keyword">return</span> <span class="code-keyword">this</span>.name + <span class="code-exp-string">','</span> + Super( msg );   <span class="code-comments">// <span class="code-keyword">super</span>(...) 调用父类同名方法
+</span>    }
+    
+    <span class="code-keyword">this</span>.method1=<span class="code-keyword">function</span>() {
+        <span class="code-keyword">return</span> <span class="code-exp-string">'method1 call '</span> + IMyItface.PROPERTY1;
+    }
+      
+    <span class="code-keyword">this</span>.method2=<span class="code-keyword">function</span>() {
+        <span class="code-keyword">return</span> <span class="code-exp-string">'method2 call '</span> + IMyItface.PROPERTY2;
+    }
+      
+});
+
+<span class="code-comments">// ---- 闪瞎双眼的分割线 ---
+</span>
+<span class="code-comments">// Animal.js
+</span>Class( <span class="code-exp-string">"Animal"</span> ,<span class="code-keyword">function</span>(){
+
+    <span class="code-keyword">this</span>.age = 0;
+    <span class="code-keyword">this</span>.sex = <span class="code-exp-string">'未知'</span>;
+    
+    <span class="code-keyword">this</span>.Animal=<span class="code-keyword">function</span>( age, sex ) {
+        Super();        <span class="code-comments">// 调用父类构造方法
+</span>
+        <span class="code-keyword">this</span>.age = age;
+        <span class="code-keyword">this</span>.sex = sex;
+    }
+
+    <span class="code-keyword">this</span>.say=<span class="code-keyword">function</span>( msg ) {
+        <span class="code-keyword">return</span> <span class="code-keyword">this</span>.age + <span class="code-exp-string">','</span> + <span class="code-keyword">this</span>.sex + <span class="code-exp-string">',say:'</span> + msg;
+    }
+});
+
+<span class="code-comments">// ---- 闪瞎双眼的分割线 ---
+</span>
+<span class="code-comments">// IMyItface.js
+</span>Interface( <span class="code-exp-string">"IMyItface"</span> ,<span class="code-keyword">function</span>(){
+    <span class="code-keyword">this</span>.method1=Function;      <span class="code-comments">// 接口方法定义
+</span>    <span class="code-keyword">this</span>.method2=Function;	
+    <span class="code-keyword">this</span>.PROPERTY1 = <span class="code-exp-string">'接口中的静态常量'</span>;
+    <span class="code-keyword">this</span>.PROPERTY2 = <span class="code-keyword">true</span>;
+});
+
+<span class="code-comments">// ---- 闪瞎双眼的分割线 ---
+</span>
+<span class="code-comments">// main.js
+</span>Import( <span class="code-exp-string">'Dog'</span> );
+<span class="code-keyword">var</span> dog = <span class="code-keyword">new</span> Dog( 3, <span class="code-exp-string">'公'</span>, <span class="code-exp-string">'小白'</span> );
+console.log( dog.say( <span class="code-exp-string">'hello'</span> ) );  <span class="code-comments">// 小白,3,公,say:hello
+</span>
+</pre>
+    </div>
+
+
+</body>
+</html>

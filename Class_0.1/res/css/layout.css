@@ -1,0 +1,356 @@
+/**
+ * CSS Hack:
+ *
+ * body {
+ *        background-color:Black;
+ *        background-color:red\9\0;
+ *        background-color:blue\0;
+ *        *background-color:navy;
+ *        _background-color:green;
+ *    }
+ *
+ *　　注意点： IE9  支持  \9\0, 中间不要有空格，写成  background-color:red \9\0;不会识别。必须 background-color:red\9\0;
+ *　　IE8  支持  \0，同样中间不要有空格。
+ *　　IE6，IE7 都支持  * ，但是IE6特别还支持 下划线_,  如果要特别针对IE6，可以加下划线,  比如支持IE7  写成    *background-color:navy;
+ *　　仅支持IE6的写法    _background-color:green;
+ *　　定义顺序：  火狐Google>IE9>IE8>IE7>IE6;
+ *    <!--[if !IE]><!--> 除IE外都可识别 <!--<![endif]-->
+ *    <!--[if IE]> 所有的IE可识别 <![endif]-->
+ *    <!--[if IE 6]> 仅IE6 <![endif]-->
+ *    <!--[if lt IE 6]> IE6以及IE6以下 <![endif]-->
+ *    <!--[if gte IE 6]> IE6以及IE6以上 <![endif]-->
+ *    <!--[if IE 7]> 仅IE7 <![endif]-->
+ *    <!--[if lt IE 7]> IE7以及IE7以下<![endif]-->
+ *    <!--[if gte IE 7]> IE7以及IE7以上 <![endif]-->
+ *    <!--[if IE 8]> 仅IE8 <![endif]-->
+ *    <!--[if IE 9]> 仅IE9 <![endif]-->
+ *
+ * 简单一行代码，让IE8自动调用IE7的渲染模式，只要IE8读到这个标签，它就会自动启动IE7兼容模式，保证页面完整展示 
+ * <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+ * 
+ * 
+ *  更全面的CSS Hack：
+ * 
+ *  #test {   
+ *       width:300px;   
+ *       height:300px;   
+ *         
+ *       background-color:blue;          // firefox
+ *       background-color:red\9;         // all ie
+ *       background-color:red\9\0;       // ie9
+ *       background-color:yellow\0;      // ie8
+ *       *background-color:yellow\0;     // ie7 + ie6
+ *       +background-color:pink;         // ie7
+ *       _background-color:orange;       // ie6
+ *   }
+ *
+ *   :root #test { background-color:purple\9; }  // ie9
+ *
+ *   @media all and (min-width:0px){ #test {background-color:black\0;} }  // opera
+ *
+ *   @media screen and (-webkit-min-device-pixel-ratio:0){ #test {background-color:gray;} }  // chrome and safari
+ *
+ */
+
+/* 页面高度100% */
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
+html {
+    background-color: #F4F4F4;
+    color: #333333;
+    font-family: "Microsoft Yahei", "微软雅黑", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    color: inherit;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 1;
+    text-rendering: optimizelegibility;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    font-size: 12px;
+}
+
+h1,h2,h3 {
+    line-height: 40px;
+}
+
+h4,h5,h6 {
+    line-height: 20px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+a {
+    color: #007ABA;
+}
+
+input,textarea {
+    width: 210px;
+}
+
+button,input,select,textarea {
+    font-size: 100%;
+    vertical-align: middle;
+}
+
+.uneditable-input,select,textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"]
+    {
+    color: #555;
+    display: inline-block;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    padding: 4px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+/*
+.uneditable-input:focus,select:focus,textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus
+    {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+}
+*/
+
+/* CSS3
+
+ 选择被用户选取的元素部分
+::selection {
+	color:#ff0000;
+}
+
+ 选择文档的根元素, 在HTML中, 根元素始终是html元素
+:root {
+	height:100%;
+}
+*/
+
+input[type="file"],input[type="image"] {
+    width: auto;
+}
+
+button,input[type="button"],input[type="reset"],input[type="submit"],input[type="radio"],input[type="checkbox"]
+    {
+    width: auto;
+    cursor: pointer;
+}
+
+select,input[type="file"] {
+    height: 30px;
+    line-height: 30px;
+}
+
+select {
+    background-color: #FFF;
+    border: 1px solid #BBB;
+    width: 220px;
+}
+
+select[multiple],select[size] {
+    height: auto;
+    padding: 0;
+}
+
+/* 图片的自适应, 此样式会导致百度地图地标图片显示异常
+img,object {
+    max-width: 100%;
+}
+*/
+
+/* 解決windows平台缩放图片时，可能出现的图像失真现象 */
+img {
+    -ms-interpolation-mode: bicubic;
+}
+
+/* 清除浮动,自动撑开 */
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:before,.clearfix:after {
+    display: table;
+    content: '';
+    line-height: 0;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* chrome fixes font-size < 12px */
+.text-size-adjust{
+	-webkit-text-size-adjust: none;
+}
+
+/* 禁止选择，移动设备上需要设置给顶层html元素 */
+.selectable-off,.selectable-off * {
+    -webkit-touch-callout:none; /* 禁止长按页面弹出菜单 */
+	-moz-user-select: none;     /* 禁止页面文字选择 */
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+
+/* 局部滚动(仅ios5以上) */
+.scrolling-on {
+	-webkit-overflow-scrolling:touch;
+}
+
+/* 开启选择 */
+.selectable-on {
+    -moz-user-select: -moz-none !important;
+    -khtml-user-select: -moz-none !important;
+    -webkit-user-select: -moz-none !important;
+}
+
+/* 隐藏元素 */
+.hide {
+    display: none;
+}
+
+/** 
+ * 常用透明：100%、90%、70%、50%、30%、10%
+ * 其他值可以通过组件的setOpacity(number)进行设置
+ * setOpacity已在组件的顶级父类中定义
+ */
+.transparent {
+    -moz-opacity: 0;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+}
+
+.transparent-50 {
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    filter: alpha(opacity = 50);
+}
+
+/* 滚动条 */
+.scroll-off {
+    overflow: hidden !important;
+}
+.scroll-auto,.scroll-on {
+    overflow: auto;
+}
+.scroll-x-on {
+    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden; 
+}
+.scroll-y-on {
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* 阴影 */
+.box-shadow-3 {
+    -webkit-box-shadow: 3px 3px 10px rgba(2, 37, 69, 0.8);
+    -moz-box-shadow: 3px 3px 10px rgba(2, 37, 69, 0.8);
+    box-shadow: 3px 3px 10px rgba(2, 37, 69, 0.8);
+}
+
+/* 圆角 */
+.border-radius-3 {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.border-radius-lt-rt-3 {
+    -moz-border-radius: 3px 3px 0px 0px;
+    -webkit-border-radius: 3px 3px 0px 0px;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.border-radius-lb-rb-3 {
+    -moz-border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
+    border-radius: 0px 0px 3px 3px;
+}
+
+/* 文本超出打省略号 */
+.text-overflow-s {
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 浮动 */
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.fc {
+    float: center;
+}
+
+/* 滤镜:模糊+灰色 */
+.filter-1 {
+	-webkit-filter: blur(2px) grayscale(1);
+    -moz-filter: blur(2px) grayscale(1);
+    -o-filter: blur(2px) grayscale(1);
+    -ms-filter: blur(2px) grayscale(1);
+    filter: blur(2px) grayscale(1);
+    opacity: .7; /* fallback */
+}
+
+/* 隔行换色 */
+.table-gap-row-color > tbody > tr,
+.table-gap-row-color > tr:nth-child(odd) {
+	background-color: rgba(0, 0, 0, .025);
+	background-clip: padding-box;
+}
+
+/* 固定表头, 表体滚动条 */
+.j-data-table-wrap table tbody {
+	display:block;
+	height:356px;
+	overflow-y:auto;
+}
+.j-data-table-wrap thead {
+	border-bottom : 0;
+}
+.j-data-table-wrap table thead,
+.j-data-table-wrap tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+}
+.j-data-table-wrap table thead {
+	/* 表头单元格对齐偏移,根据情况修改 */
+	width: calc( 100% - 1.5rem );
+}

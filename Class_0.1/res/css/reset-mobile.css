@@ -1,0 +1,49 @@
+/**
+ * 移动设备
+ */
+
+html, body {
+    overflow: hidden;
+}
+
+html {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    font-family: 'HelveticaNeue-Light', 'HelveticaNeue', 'Microsoft Yahei', '微软雅黑', Helvetica, Arial, sans-serif;
+}
+
+body {
+	-webkit-overflow-scrolling: touch;          /* 快速触摸回弹 for iOS */
+    -webkit-touch-callout: none;                /* 禁用长按页面时的弹出菜单 for iOS prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* 禁止文字自动调整大小(默认下旋转设备文字大小发生变化) prevent webkit from resizing text to fit */
+}
+
+:not(input,textarea) {
+	-webkit-user-select: none;                  /* 禁止页面文字选择  prevent copy paste, to allow, change 'none' to 'text' */
+}
+
+/* 去掉点击链接和文本框时的半透膜覆盖层(IOS)或者虚线框(android) */
+a, button, input {
+	-webkit-tap-highlight-color: rgba(0,0,0,0); /* 去掉点击链接和文本框对象的半透明遮盖层(iOS)或虚线框(android) */
+    -webkit-tap-highlight-color: transparent;   /* For some Androids */
+	-webkit-appearance: none;                   /* 消除输入框和按钮的原生外观，IOS上需设置此样式才能给按钮和输入框设置自定义样式 */
+}
+
+/* 横屏 */
+@media (orientation: portrait) {
+	
+}
+
+/* 竖屏 */
+@media (orientation: landscape) {
+	
+}
+
+/* 启用硬件加速 */
+.enable-hardware-acceleration {
+	-webkit-transform: translate3d(0,0,0); /* 提前给需要开启硬件加速的元素给上此样式,避免临时开启界面闪一下 */
+	
+	backface-visibility:hidden;         /* 属性定义当元素不面向屏幕时是否可见 */
+	-webkit-backface-visibility:hidden;	/* Chrome 和 Safari */
+	-moz-backface-visibility:hidden; 	/* Firefox */
+	-ms-backface-visibility:hidden; 	/* Internet Explorer */
+}

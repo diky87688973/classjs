@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- 字符集设置, 避免乱码 -->
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta http-equiv="content-language" content="zh-cn" />
+
+<meta name="author" content="Fan, diky87@qq.com" />
+<meta name="keywords" content="Class,Classjs,Class.js,Fan,Fanjs,Fan.js,javascript,javascript oop,oop,oopjs,oop.js" />
+<meta name="description" content="javascript oop framework,面向对象的javascript框架" />
+
+<!-- 自适应界面, 使用设备最大尺寸, 默认原始比例显示 -->
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+<title>Class.js OOP Test</title>
+
+<!-- css -->
+<link type="text/css" rel="stylesheet" href="res/css/reset.css" />
+<link type="text/css" rel="stylesheet" href="res/css/layout.css" />
+<link type="text/css" rel="stylesheet" href="res/css/code.css" />
+
+<!-- Class.js -->
+<script src="Class.js"
+        compiler="Class.ECMAScript6Compiler"
+        home=""
+        classpath=""
+        mode="develop"
+        charset="utf-8"
+        type="text/javascript">
+</script>
+
+<!-- Fan.js -->
+<script src="Fan.js"
+        root=""
+        classpath=""
+        charset="utf-8"
+        type="text/javascript">
+</script>
+
+
+<!-- Class.js 编译器 
+<script type="text/javascript" src="ECMScript-6-Compiler-Class.js"></script>
+-->
+<!-- Class.js 编译器 压缩版
+<script type="text/javascript" src="ECMScript-6-Compiler-Class.min.js"></script>
+ -->
+ 
+<!-- Fan.js 编译器 -->
+<script type="text/javascript" src="ECMScript-6-Compiler-Fanjs.js"></script>
+
+ 
+<script type="text/javascript">
+    function _onload() {
+        /*
+        console.log( '\n\n\n性能测试:Class.js, new 20000个ECMAScript6Compiler对象' );
+        startTime = new Date().getTime();
+        for ( var i = 0; i < 20000; i++ )
+            new Class.ECMAScript6Compiler();
+        console.log( '耗时:' + (new Date().getTime() - startTime) + '毫秒' );
+        
+        console.log( '\n\n\n性能测试:Fan.js, new 20000个ECMAScript6Compiler对象' );
+        var startTime = new Date().getTime();
+        for ( var i = 0; i < 20000; i++ )
+            new ECMAScript6Compiler();
+        console.log( '耗时:' + (new Date().getTime() - startTime) + '毫秒' );
+        return; // */
+        
+        var count = 0, errorCount = 0;
+        var result = [ 'C:show undefined',
+                       'D:init',
+                       'C:init',
+                       'D:initEvent',
+                       'A:initEvent',
+                       'C:show 1',
+                       'B:_initEvent',
+                       'C:_initEvent',
+                       'A:init',
+                       'C:show 2',
+                       'TestB',
+                       'TestA',
+                       '1+2=3',
+                       '测试完毕',
+                       '[class test.TestC]' ];
+        window.alert2 = function ( msg ) {
+            if ( count >= result.length )
+                throw new Error( '防死循环弹框而报错终止' );
+            
+            if ( msg === result[ count++ ] )
+                console.log( '%c正确%c\t' + msg, 'color:green', 'color:#aaa' );
+            else {
+                errorCount++;
+                console.log( '%cERROR%c\t' + msg, 'color:red', 'color:#aaa' );
+            }
+        };
+
+        // Package( 'Fan.test' );
+        var code0 = "package test;";
+        
+        var code1 = [
+        "// ECMAScript 6 类语法",
+        "/*",
+        " * 定义一个类",
+        " */",
+        "class TestA {",
+        "    TestA() {",
+        "        super();",
+        "    }",
+        "    init() {",
+        "        alert2( 'A:init' );",
+        "        this.show( 2 );",
+        "    }",
+        "    initEvent() {",
+        "        alert2( 'A:initEvent' );",
+        "        this.show( 1 );",
+        "    }",
+        "    show( a, b, c ) {",
+        "        alert2( 'TestA' );",
+        "        alert2( a + '+' + b + '=' + c );",
+        "        alert2( '测试完毕' );",
+        "        alert2( this.getSuper().getClass() + '' )",
+        "    }",
+        "}" ].join( '\n' );
+
+        var code2 = [
+		"/*",
+		" * 继承",
+		" */",
+        "class TestB extends test.TestA {",
+        /* "    TestB() {",
+        "        super();",
+        "    }", */
+        "    init() {",
+        "        alert2( 'B:init' );",
+        "        super();",
+        "    }",
+        "    _initEvent() {",
+        "        alert2( 'B:_initEvent' );",
+        "        this._initEvent();",
+        "    }",
+        "    show() {",
+        "        alert2( 'TestB' );",
+        "        super( 1, 2, 3 );",
+        "    }",
+        "}" ].join( '\n' );
+
+        var code3 = [
+		"/**",
+		" * 混乱注释",
+		" */",
+        "class//",
+        "/****/TestC/* *asdasd",
+        "*//**/ extends/*****/ test.TestB //",
+        "/**/ {",
+        "    TestC() {",
+        "        super();",
+        "    }",
+        "    init() {",
+        "        alert2( 'C:init' );",
+        "        this.initEvent();",
+        "    }",
+        "    _initEvent() {",
+        "        alert2( 'C:_initEvent' );",
+        "        super.getSuper().init();",
+        "    }",
+        "    show( p ) {",
+        "        alert2( 'C:show ' + p );",
+        "        if ( p == 1 ) {",
+        "            super._initEvent();",
+        "        } else if ( p == 2 ) {",
+        "            super();",
+        "        } else {",
+        "            this.init();",
+        "        }",
+        "    }",
+        "}" ].join( '\n' );
+
+        var code4 = [
+        "/**/interface/**//**/MyInterface /**/ /**/  /**//**/ {/**/",
+        "    this.method1 = Function;",
+        "    method2 (  ",
+        "    );",
+        "    method3  /**/ /** */ ( 1 ,2, 3 /**/ ) /* */ ;",
+        "    method4(window);",
+        "}" ].join( '\n' );
+        
+        var code5 = [
+        "/**/class/**//**/TestD /**/ /**/ extends /**/test.TestC/**/ implements/**/ /**/ /**/test.MyInterface {/**/",
+        /* "    TestD() {",
+        "        super();",
+        "    }", */
+        "    method1() {",
+        "        alert('method1');",
+        "    }",
+        "    method2 () {}",
+        "    this.method3 = function () {}",
+        "    method4/**/(/**/)/**/{}",
+        "    init() {",
+        "        alert2( 'D:init' );",
+        "        super();",
+        "    }",
+        "    initEvent() {",
+        "        alert2( 'D:initEvent' );",
+        "        super();",
+        "    }",
+        "}" ].join( '\n' );
+        
+        window.testCodeText = [ code0, code1, code2, code3, code4, code5 ].join( '\n\n' );
+        
+        // console.log( '源码:\n' + testCodeText );
+        
+        try {
+            
+            // 随机选择不同的编译器
+            var flg = 1;//Math.random() >= 0.4;
+            
+            // 编译后解析执行
+            var compiler = flg ? Class.getCompiler() : Fan.ClassManager.getCompiler();
+            
+            var newCode = compiler.build( testCodeText, function( code ) {
+                if ( flg )
+                    Class.parseClass( code );
+                else
+                    Fan.ClassManager.parseClass( code );
+            }, function( errors ) {
+				var errLine = errors[ 0 ],
+					errColumn = errors[ 1 ],
+					errMsg = errors[ 2 ],
+					errCode = errors[ 3 ];                
+                console.log( '编译错误: ' + errMsg );
+                console.log( '错误位置: ' + errLine + ' 行 ' + errColumn + ' 列' );
+                console.log( '错误代码: ' + errCode );
+            } );
+         
+            var srcCodeWrap = document.getElementById( 'srcCodeWrap' );
+            var newCodeWrap = document.getElementById( 'newCodeWrap' );
+            
+            srcCodeWrap.innerHTML = compiler.coloring( testCodeText );
+            newCodeWrap.innerHTML = compiler.coloring( newCode );
+            
+            console.log( 'OOP测试开始' );
+            
+            window.a = new test.TestD();
+            a.show();
+            
+            console.log( 'OOP测试结束' );
+            
+            if ( errorCount > 0 )
+                alert( 'OOP 测试结束, 错误:' + errorCount );
+            else
+            	alert( 'OOP 测试结束, 完全正确!' );
+            
+        } catch ( e ) {
+            console.log( '%c 出现异常 ' + e, 'color:red' );
+            throw e;
+        }
+    }
+</script>
+
+</head>
+
+<body onload="_onload()" style="font-size:12px;height:100%;">
+    <h4 style="text-align:center;color:#999;">跨浏览器支持 ECMAScript6 类机制</h4>
+    <div style="width:48%;float:left;">
+        <h6 style="text-align:center;color:blue;">编译前的 ECMAScript6 代码</h6>
+        <pre id="srcCodeWrap" class="code-bg-color" style="padding:4px;"></pre>
+    </div>
+    <div style="width:48%;float:right;">
+        <h6 style="text-align:center;color:blue;">编译后的 Class.js 代码</h6>
+        <pre id="newCodeWrap" class="code-bg-color" style="padding:4px;"></pre>
+    </div>
+</body>
+</html>

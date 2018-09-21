@@ -1,0 +1,33 @@
+<!-- load-ui 配置说明:                                       -->
+<!-- load-ui 标签表示一个ui对象                                                                                                              -->
+
+<!-- 示例1                                                 -->
+<!-- path:(String)                                        -->
+<!--       参数表示一个uiconfig的文件路径                                                                                    -->
+<!--       凡事设置path的标签, 则会通过loadUI载入uiconfig配置以                       -->
+<!--       构建ui对象, 并忽略标签内的html片段                                                                           -->
+<load-ui path="drink.BaseView"/></load-ui>
+
+<!-- 示例2                                                        -->
+<!-- ui-class:(String)                                          -->
+<!--          未设置path的标签, 则以ui-class配置的ui类名构建一个     -->
+<!--          ui对象, 并把标签内部html设置到ui对象是innerDom之中    -->
+<!--                                                            -->
+<!-- use-user-interface:(boolean)                               -->
+<!--          是否开启用户交互, 开启则会响应ui的触控事件如:tap     -->
+<!--                                                            -->
+<load-ui ui-class="example.view.demo.MyView" use-user-interface="true">
+    <div>
+        <div>parent view</div>
+
+        <!-- 嵌套的load-ui标签, 其ui结构视该内层ui隶属于父load-ui的子ui -->
+        <load-ui ui-class="example.view.demo.MyView" use-user-interface="true">
+            <div>sub view</div>
+            <!-- this.parentView 指向父load-ui对象 -->
+        </load-ui>
+        
+        <!-- 可嵌入html片段 -->
+        <load-tpl path="miju.widgets.InputTpl"></load-tpl>
+        
+    </div>
+</load-ui>

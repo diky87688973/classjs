@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+<title>anim.js自定义动画测试</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<!-- 自适应界面, 使用设备最大尺寸, 默认原始比例显示 -->
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+<!-- 字符集设置, 避免乱码 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!-- 临时css -->
+<style type="text/css">
+#test {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 0;
+	left: 500px;
+	background-color: #ccc;
+	
+	-moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+</style>
+
+<!-- libs -->
+<script type="text/javascript" src="anim-src.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="anim-src2.js" charset="utf-8"></script> -->
+
+<script type="text/javascript">
+	var div, srcY, srcX;
+
+	function init() {
+		// 需要被执行动画的元素
+		div  = document.getElementById( 'test' );
+		srcY = div.offsetTop;
+		srcX = div.offsetLeft;
+		
+		toRight();
+	}
+	
+	function toRight() {
+		
+		// 求圆公式:(x-a)²+(y-b)²=r², 假设a,b都为0, r为300
+		
+		// 调用anim执行动画步骤, 从-200演变成200的x轴轨迹动画, 并计算每一个x轨迹对应的y值
+		anim( -200, 200, 1000, function( now, progress, fps ) {
+			// 动画每帧
+			
+			// 套用公式计算出y值
+			var x = now, r = 300;
+			y = Math.sqrt( r * r - x * x );
+			
+			// x轴移动
+			div.style.left = (srcX + now) + 'px';
+				
+			// y轴移动
+			div.style.top = (srcY + y) + 'px';
+				
+			// debug ...
+			if (isNaN(y)) {
+				console.log( 'r:' + r + ',x:' + x + ',y:' + y );
+			}
+			
+			// console.log( 'FPS: ' + fps );
+			
+		}, function() {
+			
+			// 再移动到左边
+			toLeft();
+		} );		
+	}
+	
+	function toLeft() {
+		
+		anim( 200, -200, 1000, function( now, progress, fps ) {
+			
+			// 套用公式计算出y值
+			var x = now, r = 300;
+			y = Math.sqrt( r * r - x * x );
+			
+			// x轴移动
+			div.style.left = (srcX + now) + 'px';
+			
+			// y轴移动
+			div.style.top = (srcY + y) + 'px';
+			
+			// debug ...
+			if (isNaN(y)) {
+				console.log( 'r:' + r + ',x:' + x + ',y:' + y );
+			}
+			
+			// console.log( 'FPS: ' + fps );
+			
+		}, function() {
+			
+			// 再移动到右边, 形成循环
+			toRight();
+		} );		
+	}
+</script>
+
+<body onload="init()">
+    <div id="test"></div>
+</body>
+</html>

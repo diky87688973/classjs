@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>导航悬浮展示菜单</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+html,body,ul {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background-color:#eee;
+}
+nav {
+	width:100%;
+	background-color:rgb(28,32,35);
+}
+.nav li {
+	height:40px;
+	line-height:40px;
+	padding:0 10px;
+	list-style: outside none none;
+    float: left;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bolder;
+    font-family: 'microsoft yahei';
+}
+/* 清除浮动,自动撑开 */
+.clearfix {
+    *zoom: 1;
+}
+.clearfix:before,.clearfix:after {
+    display: table;
+    content: '';
+    line-height: 0;
+}
+.clearfix:after {
+    clear: both;
+}
+</style>
+
+<style type="text/css">
+#menu-wrap {
+	background-color:rgb(39,43,46);
+	width: 100%;
+	color: white;
+    font-size: 14px;
+    font-family: 'microsoft yahei';
+    position: absolute;
+    top:-20%;
+	left: 0;
+}
+.fold-enter-active {
+  animation-name: fold-in;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.fold-leave-active {
+  animation-name: fold-out;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes fold-in {
+  0% {
+  	opacity: 0;
+    top:-20%;
+  }
+  100% {
+  	opacity: 1;
+  	top:40px;
+  }
+}
+@keyframes fold-out {
+  0% {
+    opacity: 1;
+    top: 40px;
+  }
+  100% {
+    opacity: 0;
+    top: -20%;
+  }
+}
+</style>
+
+<script type="text/javascript">
+	function active ( idx ) {
+	    clearTimeout( leaveTimer );
+	    if (idx == null)
+	        return;
+	    
+    	var menuWrap = document.getElementById( 'menu-wrap' );
+    	menuWrap.className = 'fold-enter-active';
+    	menuWrap.innerHTML = menuWrap.innerHTML.replace( /\d/g, idx );
+	}
+	var leaveTimer;
+  	function leaveAct () {
+  	   	clearTimeout( leaveTimer );
+  	  	leaveTimer = setTimeout( function() {
+	  	  	var menuWrap = document.getElementById( 'menu-wrap' );
+	  		menuWrap.className = 'fold-leave-active';
+  	  	}, 300 );
+  	}
+</script>
+</head>
+
+<body>
+	<div class="index_header">
+      <nav class="index_nav container">
+         <ul class="nav_menu nav">
+             <li class="menu_item" onmouseenter="active(1)" onmouseleave="leaveAct()">
+                 <span>菜单1</span>
+             </li>
+             <li class="menu_item" onmouseenter="active(2)" onmouseleave="leaveAct()">
+                 <span>菜单2</span>
+             </li>
+             <li class="menu_item" onmouseenter="active(3)" onmouseleave="leaveAct()">
+                 <span>菜单3</span>
+             </li>
+             <li class="menu_item" onmouseenter="active(4)" onmouseleave="leaveAct()">
+                 <span>菜单4</span>
+             </li>
+             <li class="menu_item" onmouseenter="active(5)" onmouseleave="leaveAct()">
+                 <span>菜单5</span>
+             </li>
+         </ul>
+         <div class="clearfix"></div>
+
+          <div class="hd_ct_bg" id="menu-wrap" onmouseenter="active()" onmouseleave="leaveAct()" >
+            <ul class="menu_dropdown">
+              <li class="submenu">
+              	<span class="subname">子菜单1</span>
+              </li>
+              <li class="submenu">
+              	<span class="subname">子菜单2</span>
+              </li>
+              <li class="submenu">
+              	<span class="subname">子菜单3</span>
+              </li>
+              <li class="submenu">
+              	<span class="subname">子菜单4</span>
+              </li>
+              <li class="submenu">
+              	<span class="subname">子菜单5</span>
+              </li>
+            </ul>
+          </div>
+      </nav>
+  </div>
+</body>
+</html>

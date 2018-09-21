@@ -1,0 +1,55 @@
+/*!
+ * 代码着色样式
+ */
+ 
+/* syntaxhighlighter 插件外框 */
+.syntaxhighlighter {
+	overflow-y: hidden !important;
+	margin-top: 0 !important;
+	
+	-moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+ 
+/* 代码标题 */
+.code-title {
+	color: rgb(153, 0, 0);
+	font-weight: bold;
+}
+
+/* 代码显示区域的背景色 */
+.code-bg-color {
+	background-color: #F4F4F4;
+}
+
+/* 关键字 */
+.code-keyword {
+	color: #7F0074;
+	font-weight: bold;
+}
+
+/* 字符串 */
+.code-exp-string {
+	color: #2A00FF;
+}
+
+/* 注释 */
+.code-comments {
+    color: #3F7F5F;
+}
+
+/* 文档注释 */
+.code-doc-comments {
+    color: #3F5FBF;
+}
+
+/* 注视中的表达式|关键字 */
+.code-comments .code-exp-string, .code-comments .code-keyword {
+	color: #3F7F5F;
+	font-weight: normal;
+}
+.code-doc-comments .code-exp-string, .code-doc-comments .code-keyword {
+    color: #3F5FBF;
+    font-weight: normal;
+}
