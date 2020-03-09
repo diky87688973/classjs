@@ -237,11 +237,11 @@ if ( !(Function.prototype.delay instanceof Function) )
 if ( !(Date.prototype.format instanceof Function) )
     Date.prototype.format = function formatDate( format ) {
         var m = {
-            y : this.getFullYear(), M : this.getMonth() + 1, d : this.getDate(),
-            h : this.getHours(),    m : this.getMinutes(),   s : this.getSeconds(),
-            n : this.getMilliseconds()
+            y : this.getFullYear(), M : this.getMonth() + 1,    d : this.getDate(),
+            h : this.getHours(),    H : this.getHours(),        m : this.getMinutes(),
+            s : this.getSeconds(),  n : this.getMilliseconds()
         };
-        return (format || 'yyyy-MM-dd hh:mm:ss').replace( /(yyyy|M{1,2}|d{1,2}|h{1,2}|m{1,2}|s{1,2}|n{1,2})/g, function( v ) {
+        return (format || 'yyyy-MM-dd HH:mm:ss').replace( /(yyyy|M{1,2}|d{1,2}|h{1,2}|H{1,2}|m{1,2}|s{1,2}|n{1,2})/g, function( v ) {
             return v.length == 2 ? ('0' + m[ v[ 0 ] ]).substr( v[ 0 ] == 'n' ? -3 : -2 ) : m[ v[ 0 ] ];
         } );
     };
@@ -341,7 +341,7 @@ function noop() {};
  */
 var Browser = {};
 Browser[ function( ua ) {
-    return Browser[ 'browserName' ] = (
+    return Browser.browserName = (
         ua.match( /\bchrome\/([\d.]+)/ )          ? 'chrome'  :
         ua.match( /\bfirefox\/([\d.]+)/ )         ? 'firefox' :
         ua.match( /\bmsie ([\d.]+)/ )             ? 'ie'      :
@@ -350,7 +350,7 @@ Browser[ function( ua ) {
         ua.match( /\bversion\/([\d.]+).*safari/ ) ? 'safari'  :
         'unknow'
     );
-}( window.navigator.userAgent.toLowerCase() ) ] = Browser.browserVersion = RegExp[ '$1' ];
+}( window.navigator.userAgent.toLowerCase() ) ] = Browser.browserVersion = RegExp.$1;
 
 // IE浏览器的文档模式
 Browser.ie && (Browser.ieDocMode = document.documentMode || Browser.ie);
@@ -405,7 +405,10 @@ function _log( msg ) {
                        'color:lightslategray' ].concat( Array.prototype.slice.call( arguments, 1 ) );
         
         if ( console.log )
-            console.log.apply( console, params );
+            if ( msg instanceof Error )
+                console.error( msg );
+            else console.log.apply( console, params );
+        
         /* else if ( console.info )
             console.info.apply( console, params );
         else if ( console.debug )
@@ -432,13 +435,13 @@ function isEmptyObject( obj ) {
 
 /**
  * 克隆对象
- * @param {Object} obj - 被判断的对象
+ * @param {Object} obj - 被克隆的对象
  * @param {Boolean} cloneAll - 是否深度克隆,缺省false
  * @return {Object} - 返回新对象
  */
 function cloneObject( obj, cloneAll ) {
     switch ( true ) {
-    case obj === null || obj === undefined :
+    case obj == null :
     case typeof obj === 'number' :
     case typeof obj === 'string' :
         return obj;
@@ -450,9 +453,11 @@ function cloneObject( obj, cloneAll ) {
         var reg = new RegExp( '/' + obj.source + '/' + obj.flags );
         reg.lastIndex = obj.lastIndex;
         return reg;
+    case obj instanceof Date :
+        return new Date( obj.getTime() );
     case typeof obj === 'object' && !!obj :
     case obj instanceof Array :
-        var newObj = {};
+        var newObj = obj instanceof Array ? [] : {};
         for ( var i in obj ) {
             if ( i && obj.hasOwnProperty( i ) ) {
                 newObj[ i ] = cloneAll ? cloneObject( obj[ i ] ) : obj[ i ];
@@ -815,8 +820,10 @@ Listener = {
             
             return fnMap.each( function( k, v, es ) {
                 if ( typeof v == 'function' ) {
-                    var r = v.apply( this, args || [] );
-                    if ( false === r ) return r;
+                    try {
+                        var r = v.apply( this, args || [] );
+                        if ( false === r ) return r;
+                    } catch ( e ) { _log( e ) }
                 }
             }, this );
         }
